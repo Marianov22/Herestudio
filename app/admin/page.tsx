@@ -11,8 +11,23 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+// Definir la interfaz para un lead
+interface Lead {
+  id: number
+  company: string
+  name: string
+  instagram: string
+  instagram_followers: number
+  tiktok: string
+  tiktok_followers: number
+  youtube: string
+  youtube_subscribers: number
+  created_at: string
+}
+
 export default function AdminPanel() {
-  const [leads, setLeads] = useState([])
+  // Especificar el tipo Lead[] para el estado
+  const [leads, setLeads] = useState<Lead[]>([])
   const [filter, setFilter] = useState("todos")
   const [minFollowers, setMinFollowers] = useState(0)
 
