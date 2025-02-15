@@ -81,7 +81,7 @@ export default function ContactForm() {
       toast({
         title: "¡Formulario enviado!",
         description: "Nos pondremos en contacto contigo pronto.",
-        variant: "success"
+        variant: "default"
       })
       form.reset()
     } catch (error) {
