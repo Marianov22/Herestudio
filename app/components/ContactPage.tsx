@@ -52,15 +52,15 @@ export default function ContactPage() {
               <ul className="space-y-4">
                 <li className="flex items-start">
                   <span className="text-primary mr-2">🎥</span>
-                  <span>Producción de video profesional</span>
+                  <span>Producción de Video Virales</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-primary mr-2">📸</span>
-                  <span>Fotografía de alta calidad</span>
+                  <span>Identidad de Marca</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-primary mr-2">✏️</span>
-                  <span>Diseño y post-producción</span>
+                  <span>Contenido Innovador</span>
                 </li>
               </ul>
             </div>

@@ -66,17 +66,19 @@ export default function NewsletterSubscribe() {
   }
 
   return (
-    <section className="bg-background py-20">
+    <section className="bg-background py-12 sm:py-20">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="bg-gradient-to-br from-primary/10 to-secondary/10 rounded-3xl p-8 shadow-lg"
+          className="bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-lg"
         >
-          <h2 className="text-2xl font-bold text-foreground mb-4 text-center">Mantente Inspirado</h2>
-          <p className="text-muted-foreground mb-6 text-center">
-            Suscríbete a nuestro newsletter para recibir las últimas actualizaciones sobre diseño minimalista y arte floral.
+          <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-3 sm:mb-4 text-center">
+            Mantente Inspirado
+          </h2>
+          <p className="text-sm sm:text-base text-muted-foreground mb-6 text-center px-2 sm:px-0">
+            Suscríbete a nuestro newsletter para recibir las últimas actualizaciones.
           </p>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -86,13 +88,22 @@ export default function NewsletterSubscribe() {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input placeholder="Ingresa tu email" {...field} className="rounded-full" />
+                      <Input 
+                        placeholder="Ingresa tu email" 
+                        {...field} 
+                        className="rounded-full text-sm sm:text-base" 
+                      />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-xs sm:text-sm" />
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full rounded-full" disabled={isSubmitting}>
+              <Button 
+                type="submit" 
+                className="w-full rounded-full" 
+                disabled={isSubmitting}
+                size="lg"
+              >
                 {isSubmitting ? "Suscribiendo..." : "Suscribirse"}
               </Button>
             </form>

@@ -93,26 +93,28 @@ export default function ContactForm() {
   }
 
   return (
-    <section className="bg-background py-20" id="contact">
+    <section className="bg-background py-8 sm:py-20" id="contact">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
         >
-          <h2 className="text-3xl font-bold text-foreground sm:text-4xl mb-4">Contactanos</h2>
-          <p className="text-lg text-muted-foreground">
+          <h2 className="text-2xl sm:text-4xl font-bold text-foreground mb-3 sm:mb-4">Contactanos</h2>
+          <p className="text-base sm:text-lg text-muted-foreground px-4">
             ¿Listo para dar vida a tu visión? Creemos algo increíble juntos.
           </p>
         </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
+          className="bg-card p-4 sm:p-8 rounded-lg shadow-sm"
         >
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
               <FormField
                 control={form.control}
                 name="name"
@@ -209,7 +211,7 @@ export default function ContactForm() {
                   </FormItem>
                 )}
               />
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <FormField
                   control={form.control}
                   name="instagram"
@@ -255,43 +257,50 @@ export default function ContactForm() {
                   )}
                 />
               </div>
-              <FormField
-                control={form.control}
-                name="instagram_followers"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Seguidores en Instagram</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="Cantidad de seguidores" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="tiktok_followers"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Seguidores en TikTok</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="Cantidad de seguidores" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="youtube_subscribers"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Suscriptores en YouTube</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="Cantidad de suscriptores" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <FormField
+                  control={form.control}
+                  name="instagram_followers"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm">Seguidores IG</FormLabel>
+                      <FormControl>
+                        <Input type="number" placeholder="Cantidad" {...field} className="text-sm" />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="tiktok_followers"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm">Seguidores TikTok</FormLabel>
+                      <FormControl>
+                        <Input type="number" placeholder="Cantidad" {...field} className="text-sm" />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="youtube_subscribers"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm">Suscriptores YouTube</FormLabel>
+                      <FormControl>
+                        <Input type="number" placeholder="Cantidad" {...field} className="text-sm" />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <Button 
+                type="submit" 
+                className="w-full mt-6 sm:mt-8" 
+                disabled={isSubmitting}
+                size="lg"
+              >
                 {isSubmitting ? "Enviando..." : "Enviar Mensaje"}
               </Button>
             </form>

@@ -126,40 +126,36 @@ export default function AdminPanel() {
   }
 
   return (
-    <div className="container mx-auto py-10">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Panel de Leads</h1>
-        <Button 
-          onClick={exportToExcel}
-          className="bg-green-600 hover:bg-green-700"
-        >
+    <div className="p-4 sm:p-8 space-y-6">
+      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+        <h1 className="text-2xl sm:text-3xl font-bold">Panel de Administración</h1>
+        <Button onClick={exportToExcel} className="w-full sm:w-auto">
           Exportar a Excel
         </Button>
       </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <div>
-          <Input
-            type="text"
-            placeholder="Buscar por nombre, empresa..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full"
-          />
-        </div>
 
-        <div>
-          <Input
-            type="number"
-            placeholder="Mínimo de seguidores"
-            value={minFollowers || ""}
-            onChange={(e) => setMinFollowers(Number(e.target.value))}
-            className="w-full"
-          />
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <Input
+          placeholder="Buscar..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full"
+        />
+
+        <Select value={filter} onValueChange={setFilter}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Filtrar por estado" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="todos">Todos</SelectItem>
+            <SelectItem value="pendiente">Pendiente</SelectItem>
+            <SelectItem value="en_proceso">En Proceso</SelectItem>
+            <SelectItem value="completado">Completado</SelectItem>
+          </SelectContent>
+        </Select>
 
         <Select value={dateFilter} onValueChange={setDateFilter}>
-          <SelectTrigger>
+          <SelectTrigger className="w-full">
             <SelectValue placeholder="Filtrar por fecha" />
           </SelectTrigger>
           <SelectContent>
@@ -173,37 +169,42 @@ export default function AdminPanel() {
         <Button 
           onClick={clearFilters}
           variant="outline"
+          className="w-full"
         >
           Limpiar filtros
         </Button>
       </div>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Empresa</TableHead>
-            <TableHead>Contacto</TableHead>
-            <TableHead>Instagram</TableHead>
-            <TableHead>Seguidores IG</TableHead>
-            <TableHead>TikTok</TableHead>
-            <TableHead>Seguidores TT</TableHead>
-            <TableHead>Fecha</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {leads.map((lead) => (
-            <TableRow key={lead.id}>
-              <TableCell>{lead.company}</TableCell>
-              <TableCell>{lead.name}</TableCell>
-              <TableCell>{lead.instagram}</TableCell>
-              <TableCell>{lead.instagram_followers}</TableCell>
-              <TableCell>{lead.tiktok}</TableCell>
-              <TableCell>{lead.tiktok_followers}</TableCell>
-              <TableCell>{new Date(lead.created_at).toLocaleDateString()}</TableCell>
+      <div className="overflow-x-auto">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="whitespace-nowrap">Empresa</TableHead>
+              <TableHead className="whitespace-nowrap">Contacto</TableHead>
+              <TableHead className="whitespace-nowrap">Instagram</TableHead>
+              <TableHead className="whitespace-nowrap">Seg. IG</TableHead>
+              <TableHead className="whitespace-nowrap">TikTok</TableHead>
+              <TableHead className="whitespace-nowrap">Seg. TT</TableHead>
+              <TableHead className="whitespace-nowrap">Fecha</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {leads.map((lead) => (
+              <TableRow key={lead.id} className="text-sm">
+                <TableCell className="font-medium">{lead.company}</TableCell>
+                <TableCell>{lead.name}</TableCell>
+                <TableCell className="truncate max-w-[100px]">{lead.instagram}</TableCell>
+                <TableCell>{lead.instagram_followers?.toLocaleString()}</TableCell>
+                <TableCell className="truncate max-w-[100px]">{lead.tiktok}</TableCell>
+                <TableCell>{lead.tiktok_followers?.toLocaleString()}</TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {new Date(lead.created_at).toLocaleDateString()}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   )
 } 

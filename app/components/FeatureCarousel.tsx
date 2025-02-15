@@ -5,31 +5,24 @@ import { motion, useAnimation, useMotionValue } from "framer-motion"
 
 const features = [
   {
-    title: "Producción de Video",
-    description:
-      "Creamos contenido audiovisual de alta calidad para publicidades, redes sociales y comunicaciones corporativas.",
-    icon: "🎥",
+    title: "Producción de Video Virales",
+    description: "Creamos contenido estratégico diseñado para alcanzar máxima visibilidad y engagement en redes sociales.",
+    icon: "🔥",
   },
   {
-    title: "Fotografía",
-    description: "Servicios profesionales de fotografía para productos, eventos y narrativa de marca.",
-    icon: "📸",
+    title: "Identidad de Marca",
+    description: "Desarrollamos la imagen visual de tu marca para destacar en el mercado digital y conectar con tu audiencia.",
+    icon: "✨",
   },
   {
-    title: "Post-Producción",
-    description: "Edición experta, corrección de color y efectos visuales para perfeccionar tu contenido audiovisual.",
-    icon: "🎬",
+    title: "Contenido Innovador",
+    description: "Producimos contenido creativo y diferencial que hace destacar tu marca en el entorno digital actual.",
+    icon: "💡",
   },
   {
-    title: "Estrategia de Contenido",
-    description:
-      "Estrategias de contenido personalizadas para maximizar el impacto de tus campañas de marketing audiovisual.",
-    icon: "📊",
-  },
-  {
-    title: "Animación",
-    description: "Creación de animaciones atractivas y motion graphics para dar vida a tus ideas.",
-    icon: "🎭",
+    title: "Marketing Digital",
+    description: "Estrategias integrales para potenciar tu presencia online y alcanzar tus objetivos de negocio.",
+    icon: "🚀",
   },
 ]
 
