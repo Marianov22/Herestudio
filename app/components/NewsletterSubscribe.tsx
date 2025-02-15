@@ -8,9 +8,11 @@ import * as z from "zod"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { supabase } from "@/lib/supabase"
+import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email address." }),
+  email: z.string().email({ message: "Por favor, ingresá un correo electrónico válido." }),
 })
 
 export default function NewsletterSubscribe() {
@@ -23,15 +25,44 @@ export default function NewsletterSubscribe() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
-    // Simulate API call
-    setTimeout(() => {
-      console.log(values)
-      setIsSubmitting(false)
+    try {
+      const { data, error } = await supabase
+        .from('newsletter_subscribers')
+        .insert([{
+          email: values.email,
+          created_at: new Date().toISOString(),
+          status: 'activo'
+        }])
+        .select()
+
+      if (error) {
+        console.error('Error:', error)
+        toast({
+          title: "Error al suscribirse",
+          description: "Hubo un problema al procesar tu suscripción. Por favor, intenta nuevamente.",
+          variant: "destructive"
+        })
+        return
+      }
+
+      toast({
+        title: "¡Gracias por suscribirte!",
+        description: "Te mantendremos actualizado con las últimas novedades.",
+        variant: "default"
+      })
       form.reset()
-      alert("Thank you for subscribing to our newsletter!")
-    }, 2000)
+    } catch (error) {
+      console.error('Error:', error)
+      toast({
+        title: "Error al suscribirse",
+        description: "Hubo un problema al procesar tu suscripción. Por favor, intenta nuevamente.",
+        variant: "destructive"
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -43,9 +74,9 @@ export default function NewsletterSubscribe() {
           transition={{ duration: 0.8 }}
           className="bg-gradient-to-br from-primary/10 to-secondary/10 rounded-3xl p-8 shadow-lg"
         >
-          <h2 className="text-2xl font-bold text-foreground mb-4 text-center">Stay Inspired</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-4 text-center">Mantente Inspirado</h2>
           <p className="text-muted-foreground mb-6 text-center">
-            Subscribe to our newsletter for the latest updates on minimal design and floral artistry.
+            Suscríbete a nuestro newsletter para recibir las últimas actualizaciones sobre diseño minimalista y arte floral.
           </p>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -55,14 +86,14 @@ export default function NewsletterSubscribe() {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input placeholder="Enter your email" {...field} className="rounded-full" />
+                      <Input placeholder="Ingresa tu email" {...field} className="rounded-full" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <Button type="submit" className="w-full rounded-full" disabled={isSubmitting}>
-                {isSubmitting ? "Subscribing..." : "Subscribe"}
+                {isSubmitting ? "Suscribiendo..." : "Suscribirse"}
               </Button>
             </form>
           </Form>
