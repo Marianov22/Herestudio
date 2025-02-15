@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { supabase } from "@/lib/supabase"
+import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "El nombre debe tener al menos 2 caracteres." }),
@@ -24,8 +25,7 @@ const formSchema = z.object({
   tiktok_followers: z.string().optional(),
   youtube: z.string().optional(),
   youtube_subscribers: z.string().optional(),
-  projectType: z.string().min(1, { message: "Por favor, seleccioná un tipo de proyecto." }),
-  budget: z.string().optional(),
+  project_type: z.string().min(1, { message: "Por favor, seleccioná un tipo de proyecto." }),
   message: z.string().min(10, { message: "El mensaje debe tener al menos 10 caracteres." }),
 })
 
@@ -40,9 +40,12 @@ export default function ContactForm() {
       phone: "",
       company: "",
       instagram: "",
+      instagram_followers: "",
       tiktok: "",
+      tiktok_followers: "",
       youtube: "",
-      projectType: "",
+      youtube_subscribers: "",
+      project_type: "",
       message: "",
     },
   })
@@ -50,23 +53,40 @@ export default function ContactForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
     try {
+      // Convertir los valores de seguidores a números
+      const formattedValues = {
+        ...values,
+        instagram_followers: values.instagram_followers ? parseInt(values.instagram_followers) : 0,
+        tiktok_followers: values.tiktok_followers ? parseInt(values.tiktok_followers) : 0,
+        youtube_subscribers: values.youtube_subscribers ? parseInt(values.youtube_subscribers) : 0,
+        status: 'nuevo',
+        created_at: new Date().toISOString(),
+      }
+
       const { data, error } = await supabase
         .from('leads')
-        .insert([
-          {
-            ...values,
-            status: 'nuevo',
-            created_at: new Date().toISOString(),
-          }
-        ])
+        .insert([formattedValues])
+        .select()
 
-      if (error) throw error
+      if (error) {
+        console.error('Error detallado:', error)
+        toast({
+          title: "Error al enviar el formulario",
+          description: error.message,
+          variant: "destructive"
+        })
+        throw error
+      }
 
-      alert("¡Gracias por tu mensaje! Nos pondremos en contacto pronto.")
+      toast({
+        title: "¡Formulario enviado!",
+        description: "Nos pondremos en contacto contigo pronto.",
+        variant: "success"
+      })
       form.reset()
     } catch (error) {
+      console.error('Error completo:', error)
       alert("Hubo un error al enviar el formulario. Por favor, intenta nuevamente.")
-      console.error(error)
     } finally {
       setIsSubmitting(false)
     }
@@ -155,7 +175,7 @@ export default function ContactForm() {
               />
               <FormField
                 control={form.control}
-                name="projectType"
+                name="project_type"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Tipo de Proyecto</FormLabel>
