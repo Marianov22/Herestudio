@@ -17,7 +17,7 @@ Este proyecto es una landing page para Heres Studio, una agencia de marketing es
 
 Todo
 -Mejorar el formulario para hacerlo mas friendly a que la gente lo use 
--Rutas una vez detro de contacto
+-Rutas una vez dentro de contacto
 -Contraseña de Admin 
 -Seccion de "nuestro numeros"
 -Agregar fotos 
